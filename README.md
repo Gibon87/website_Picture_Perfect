@@ -2,7 +2,7 @@
 
 <p>During my Front-end bootcamp course I made a simple Website, feel free to check it :) .</p>
 
-Demo: https://gibon87.github.io/website_Activebox/
+Demo: https://gibon87.github.io/website_Picture_Perfect/
 
 <hr>
 
