@@ -1,0 +1,511 @@
+// ===Variables===
+$whitecolor: #fff; 
+$blackcolor-h: #222626;  //headings colour -must be outside "h2-settings" mixin
+$blackcolor-p: #959595;  //paragraphs colour -must be outside "p-settings" mixin
+$background-buy: #f6f7fa;  //background in "buy-now" and font color in footer
+$green-buy: #83cb9d;  //colour in "buy-now" section
+$color-icon: #c6c6c6;  //icons in "buy-now" section
+$green-reasons: #82ca9c; //colour "in reason" section
+$color-buy-h: #2e3b4e; //headings colour in "buy-now" - must be separately
+$color-buy-p: #8297a7; //paragraphs colour in "buy-now" - must be separately
+$font-weight-h: 300;  //font weight in headings
+$font-weight-p: 400;  //font weight in paragraphs
+$font-weight-bold: 600; //how bold is font
+$gal-height: 350px;  //tiles height in gallery section
+$padding-section: 40px 0;  //global padding in sections
+$padding-section-xxl: 80px 0; //global xxl-padding in sections
+// ===/Variables===
+
+// ===MIXINS===
+    //=mixins refered to text=
+@mixin h1-settings {
+    font-weight: $font-weight-h;
+    font-size: 60px;
+    max-width: 500px;   
+    margin-bottom: 20px;
+}
+@mixin h2-settings {
+    font-weight: $font-weight-h;
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+@mixin h3-settings {
+    font-weight: $font-weight-h;
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+@mixin h5-settings {
+    font-weight: $font-weight-bold;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+@mixin p-settings {
+    font-weight: $font-weight-p;
+    font-size: 16px;
+    line-height: 24px;
+}
+@mixin text-center {  //centering text
+    text-align: center;
+}
+    //=/mixins refered to text=
+
+    //=other=
+@mixin jumbotron-background-settings {
+    background-size: cover;
+    background-position: 60% 0;
+    background-repeat: no-repeat;
+    transition: 2s;
+}
+@mixin gallery-tile-settings { //settings for single tile in gallery section
+    padding: 50px 30px 60px 45px;
+    line-height: 28px;
+    height: $gal-height;
+    transition: background 1.5s, transform .3s;
+    @include media-xs-screen {
+        height: 300px;
+        padding-top: 20px;
+    }
+}
+@mixin gallery-hover { //:hover for every single tile in gallery section
+    &:hover {
+        cursor: pointer;
+        background-position: 40% 0 ;
+        text-shadow: 1px 1px 40px $color-icon;
+        @include transform(scale(1.01));
+        box-shadow: 0 5px 25px $color-icon;
+        z-index: 10;
+    }
+    &:hover span {  //animation of moving arrow in gallery when a:hover 
+        left: 50px; 
+    }
+}
+@mixin transition($value) {
+    -webkit-transition: $value; /* Safari */
+    transition: $value;
+}
+@mixin transform($value) {
+    -ms-transform: ($value); /* IE 9 */
+    -webkit-transform: ($value); /* Safari */
+    transform: ($value);
+}
+@mixin moving-arrow-base { //base which makes arrow moving
+    position: relative;
+    left: 0;
+    @include transition(.3s);
+}
+@mixin link-abs-arrow-settings {  //absolute link global settings
+        position: absolute;
+        a {
+            color: $whitecolor;
+            display: block;
+            margin-top: 20px;
+        }
+        span {  //arrow
+            @include moving-arrow-base;
+        }
+        a:hover span {
+            left: 50px;
+        }
+    }
+    //=other=
+
+    // ===media_mixins===
+@mixin media-xs-screen {  // media rule for xs-screen
+    @media screen and (max-width: 767px) {
+        @content;
+    }
+}
+@mixin media-sm-screen {  // media rule for sm-screen   
+    @media screen and (min-width: 768px) and (max-width:991px) {
+        @content;
+    }
+}
+@mixin media-md-screen {  // media rule for md-screen
+    @media screen and (min-width: 992px) and (max-width: 1199px) {
+        @content;
+    }
+}
+    // ===/media_mixins===
+// ===/MIXINS===
+
+//===CODE=== ===NAMES OF SECTIONS==
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+// ===JUMBOTRON-SKY===
+.jumbotron-sky {  //this is jumbotron in header
+    background: url('../Pictures/jumbotron-background.png');
+    background-attachment: fixed;
+    @include jumbotron-background-settings;
+    height: 100vh;
+    color: $whitecolor;
+    @include media-md-screen {
+        background-position: 70% 0; 
+    }
+    @include media-sm-screen {
+        background-position: 70% 0;
+    }
+    @include media-xs-screen {
+        background-position: 65% 0;
+    }
+    a { //pulsing link in top-left corner
+        color: $whitecolor;
+        font-style: italic;
+        font-weight: $font-weight-bold;
+        font-size: 22px;
+        text-decoration: none;
+        span {  //text "take" in top-left corner
+            position: relative;
+            bottom: 15px;
+              @include media-xs-screen {
+                visibility: hidden;
+            }
+        }
+        .pulse {  //pulsing button top-left corner
+            position: relative;
+            display: inline-block;
+            &:hover {
+            animation: pulsehover 1.2s infinite;
+            @keyframes pulsehover {
+            0% {opacity: 0.0; @include transform(scale(1.0));}
+            10% {opacity: 0.1; @include transform(scale(1.05));}
+            25% {opacity: 0.3; @include transform(scale(1.1));}
+            50% {opacity: 0.7; @include transform(scale(1.15));}
+            75% {opacity: 1.0; @include transform(scale(1.2));}
+            100% {opacity: 0.5; @include transform(scale(1.25));}
+            }
+        }
+    }
+        .circle { //content of pulsing button, big circle
+            width: 50px;
+            height: 50px; 
+            border-radius: 50%;
+            border: 3px solid white;
+            display: inline-block;
+            &::after { //smaller circle
+                content: "";
+                width: 20px;
+                height: 20px; 
+                position: absolute;
+                top: 15px;
+                left: 15px;
+                border-radius: 50%;
+                border: 3px solid white;
+                
+            }
+            @include media-xs-screen {
+                visibility: hidden;
+            }
+        }
+    }
+    h1 {
+        margin-top: 30vh;
+        @include h1-settings;
+        @include media-xs-screen {
+            margin: 10vh auto 0;
+            text-align: center;
+        }
+    }
+    p {
+        @include p-settings;
+        width: 450px;
+        @include media-xs-screen {
+            margin: 10px auto;
+            text-align: center;
+            width: 285px;
+        }
+    }
+    .iphone {
+        img {
+            height: 90vh;
+            position: absolute;
+            right: -0.2vh;
+            top: -300px;
+            transition: .8s;
+            &:hover {
+                @include transform(scale(1.03));
+            }
+            @include media-sm-screen {
+                height: 70vh;
+                top: -150px;
+                right: 0vh;
+            }
+            @include media-xs-screen {
+                height: 63vh;
+                top: -15px;
+                right: 5vh;
+            }
+        }
+    }   
+}
+// ===/JUMBOTRON-SKY===
+
+// ===START===
+.start {
+    padding: $padding-section;
+    .col-sm-6:nth-child(2) {
+        margin-top: 150px;
+        @include media-xs-screen {
+            margin-top: 0;
+        }
+    }
+    h2 {
+        @include h2-settings;
+        color: $blackcolor-h;  //remind: colour must be outside h2-settings 
+        @include media-xs-screen {
+            text-align: center;
+        }
+    }
+    p {
+        @include p-settings;
+        color: $blackcolor-p;  //remind: colour must be outside p-settings
+        @include media-xs-screen {
+            text-align: justify;
+        }
+    }
+}
+// ===/START===
+
+// ===GALLERY===
+.gallery {
+    color: $whitecolor;
+    padding: $padding-section;
+    overflow: hidden;
+    h3 {
+        @include h3-settings;
+    }
+    p {
+        @include p-settings;
+    }
+    .g-1 {
+        background-color: #f5989d;
+        @include gallery-tile-settings;
+        @include gallery-hover;
+    }
+    .g-2 {
+        background-color: #615f7d;
+        @include gallery-tile-settings;
+        @include gallery-hover;
+    }
+    .g-3 {
+        background: url(https://zapodaj.net/images/aaef25c2ffb08.jpg);
+        @include jumbotron-background-settings;
+        @include gallery-tile-settings;
+        @include gallery-hover;
+    }
+    .g-4 {
+        background-color: #bd8cbf;
+        @include gallery-tile-settings;
+        @include gallery-hover;
+    }
+    .g-5 {
+        background: url(https://zapodaj.net/images/2a2f2b639aaa7.jpg);
+        @include jumbotron-background-settings;
+        @include gallery-tile-settings;
+        @include gallery-hover;
+        div {
+            width: 440px;
+        }
+    }
+    .g-6 {
+        background-color: $green-reasons;
+        @include gallery-tile-settings;
+        @include gallery-hover;
+    }
+    .g-7 {
+        background: url(https://zapodaj.net/images/aaef25c2ffb08.jpg);
+        @include jumbotron-background-settings;
+        @include gallery-tile-settings;
+        @include gallery-hover;
+    }
+    .link-abs { //flexible link in gallery tile
+        @include link-abs-arrow-settings;
+        top: 260px;
+        font-size: 18px;
+        @include media-xs-screen {
+            top: 230px;
+        }
+    }
+}
+// ===/GALLERY===
+
+// ===DETAILS===
+.details {
+    padding: $padding-section;
+    @include media-xs-screen {
+        @include text-center;
+        }
+    h2 {
+        @include h2-settings;
+        color: $blackcolor-h;
+    }
+    h5 {
+        @include h5-settings;
+        color: #67676d; //must be separately from h5-settings
+        margin: 30px 0 10px;
+    }
+    p {
+        @include p-settings;
+        color: $blackcolor-p;
+    }
+}
+// ===/DETAILS===
+
+// ===JUMBOTRON-CAR===
+.jumbotron-car {
+    background: url(https://zapodaj.net/images/7ca7ac5843b55.png);
+    @include jumbotron-background-settings;
+    height: 750px;
+    color: $whitecolor;
+    margin: 50px 0 0;
+    h1 {
+        @include h1-settings;
+        margin-top: 355px;
+        max-width: 500px;
+        @include media-xs-screen {
+        margin-top: 250px;
+        }
+    }
+    p {
+        @include p-settings;
+        width: 450px;
+        @include media-xs-screen {
+            width: 250px;
+        }
+
+    }
+    .link-abs { //flexible link -the same as in gallery tiles
+        @include link-abs-arrow-settings;
+        @include media-xs-screen {
+            bottom: -30px;
+        }
+    }
+}
+// ===/JUMBOTRON-CAR===
+
+// ===REASONS===
+.reasons {
+    background-color: $green-reasons;
+    color: $whitecolor;
+    padding: $padding-section-xxl;
+    @include media-xs-screen {
+        @include text-center;
+    }
+    h2 {
+        @include h2-settings;
+    }
+    h5 {
+        @include h5-settings;
+    }
+    p {
+        @include p-settings;
+    }
+}
+// ===/REASONS===
+
+// ===BUY-NOW===
+.buy-now {
+    background-color: $background-buy;
+    padding: $padding-section-xxl;
+    @include media-xs-screen {
+        @include text-center;
+    }
+    .col-md-6 {
+        padding: 40px;
+        transition: .3s;
+    }
+    .col-md-6:hover {
+        background-color: $whitecolor;
+        cursor: default;
+        box-shadow: 0 0 62px rgba(0, 0, 0, 0.05);
+    }
+    .label-1 {  //label over name of bundle1
+        background-color: #e2e2e2;
+        font-size: 100%;
+    }
+    .label-2 { //label over name of bundle2
+        background-color: #be8dc0;
+        @extend .label-1; 
+    }
+    h3 {
+        @include h3-settings;
+        color: $color-buy-h;
+    }
+    p {
+        @include p-settings;
+        color: $color-buy-p;
+    }
+    button {
+        background-color: $green-buy;
+        margin: 20px 0;
+        transition: .5s;
+        &:hover {
+            @include transform(scale(1.05));
+        }
+    }
+    i {
+        color: $color-icon;
+        font-size: 30px;
+        margin: 0 10px;
+    }
+}
+// ===/BUY-NOW===
+
+// ===FOOTER===
+footer {
+    background-color: #192431;
+    color: $background-buy;
+    padding: $padding-section-xxl;
+    @include media-xs-screen {
+        @include text-center;
+    }
+    h5 {
+        @include h5-settings;
+    }
+    p {
+        @include p-settings;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    a {
+        color: $background-buy;
+        text-decoration: none;
+        &:hover {
+            color: $whitecolor; 
+        }
+    }
+    .form-inline .form-control {
+        width: 470px;
+        @include media-md-screen {
+            width: 400px;
+        }
+        @include media-sm-screen {
+            width: 350px;
+        }
+        @include media-xs-screen {
+            width: 220px;
+            display: inline-block;
+        }
+    }
+    .btn-success {
+        background-color: $green-reasons;
+        transition: .4s;
+    }
+    .newsletter-info {
+        margin-top: 10px;
+        font-size: 13px;
+        color: #57697f;
+        @include media-xs-screen {
+            display: inline-block;
+            width: 220px;
+            margin-top: 0;
+        }
+    }
+    .author {
+        color: black;
+    }
+}
+// ===/FOOTER===
+
